@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>eth balance</title>
+    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="flex items-center justify-center min-h-screen bg-gray-100">
+        <div class="px-8 py-6 mt-4 text-left bg-white shadow-lg">
+            <h3 class="text-2xl font-bold text-center">ETH-Balance</h3>
+            <form action="">
+                <div class="mt-4">
+                    <div>
+                        <label class="block" for="email">Enter your ETH Address<label>
+                                <input type="text" placeholder="E0x7f101fe45e6649a6fb8f3f8b43fd03d353f2b90c" id="address"
+                                    class="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600">
+                    </div>
+                    <div class="mt-4">
+                        <label class="block">Balance<label>
+                           <h3 id="balance"></h3>
+                    </div>
+                    <div class="flex items-baseline justify-between">
+                        <button type="button" class="px-6 py-2 mt-4 text-white bg-blue-600 rounded-lg hover:bg-blue-900"  id="btnn" onclick="getBalance(address.value)" >balance</button>
+                    
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</body>
+
+<script>
+    const add = document.getElementById("address");
+
+    const balance = document.getElementById("balance");
+
+    const btn = document.getElementById("btnn");
+
+  
+ 
+    
+    // API code
+    var requestOptions = {
+        method: 'GET',
+        redirect: 'follow'
+    };
+    
+    const API_KEY = "J7VGQYU6TS4HHKY823RBI3J5Q9CVUR5WP7"
+
+    function getBalance(address) {
+        fetch(`https://api.etherscan.io/api?module=account&action=balance&address=${address}&tag=latest&apikey=${API_KEY}`, requestOptions)
+            .then(response => response.json())
+            .then(result => displayBalance(result.result))
+            .catch(error => console.log('error', error));
+
+        }
+     
+        function displayBalance(bal) {
+            balance.innerText = ` ${bal/1000000000000000000} ETH`
+        }
+
+</script>
+
+</html>
